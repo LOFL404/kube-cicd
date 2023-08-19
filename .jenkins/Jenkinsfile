@@ -1,8 +1,8 @@
 pipeline {
 
   environment {
-    dockerimagename = "LOFL404/nodeapp"
-    dockerImage = ""
+    dockerimagename = "lofl404/nodeapp"  // Docker Hub 계정 이름과 소문자로 변경
+    registryCredential = 'dockerhublogin'
   }
 
   agent any
@@ -16,7 +16,7 @@ pipeline {
     }
 
     stage('Build image') {
-      steps{
+      steps {
         script {
           dockerImage = docker.build dockerimagename
         }
@@ -24,12 +24,9 @@ pipeline {
     }
 
     stage('Pushing Image') {
-      environment {
-               registryCredential = 'dockerhublogin'
-           }
-      steps{
+      steps {
         script {
-          docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
+          docker.withRegistry('https://hub.docker.com', registryCredential) {
             dockerImage.push("latest")
           }
         }
@@ -43,7 +40,5 @@ pipeline {
         }
       }
     }
-
   }
-
 }
