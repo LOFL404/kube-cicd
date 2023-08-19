@@ -11,7 +11,7 @@ pipeline {
 
     stage('Checkout Source') {
       steps {
-        git 'https://github.com/LOFL404/kube-cicd.git'
+        git 'https://github.com/LOFL404/project-test1.git'
       }
     }
 
